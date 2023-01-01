@@ -1,9 +1,26 @@
-const express = require('express');
+require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
+const express = require('express');
+const mongoose = require('mongoose');
+const { errors } = require('celebrate');
+const routes = require('./routes');
+
+const { DB_URI } = require('./constants/db');
+const { DEFAULT_PORT } = require('./constants/conn');
+
+mongoose.set('strictQuery', false);
+mongoose.connect(DB_URI, { useNewUrlParser: true });
+
+const { PORT = DEFAULT_PORT } = process.env;
 
 const app = express();
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(routes);
+
+app.use(errors());
+app.use(require('./middlewares/error-handling'));
+
+app.listen(PORT);
