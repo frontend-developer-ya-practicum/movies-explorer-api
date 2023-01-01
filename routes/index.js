@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const NotFoundError = require('../errors/not-found');
-const { signup } = require('../controllers/auth');
-const { validateSignUpBody } = require('../middlewares/validation');
+const { register, login } = require('../controllers/auth');
+const { validateSignUpBody, validateSignInBody } = require('../middlewares/validation');
 
-router.post('/signup', validateSignUpBody, signup);
+router.post('/signup', validateSignUpBody, register);
+router.post('/signin', validateSignInBody, login);
 
 router.use((req, res, next) => {
   next(new NotFoundError('Route not found'));
