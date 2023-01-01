@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const routes = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/loggers');
+const cors = require('./middlewares/cors');
 
 const { DB_URI } = require('./constants/db');
 const { DEFAULT_PORT } = require('./constants/conn');
@@ -18,6 +19,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors);
 
 app.use(requestLogger);
 
