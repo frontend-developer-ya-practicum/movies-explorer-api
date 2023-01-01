@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const helmet = require('helmet');
 const routes = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/loggers');
 const cors = require('./middlewares/cors');
@@ -23,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors);
 
 app.use(requestLogger);
+
+app.use(helmet());
 
 app.use(routes);
 
