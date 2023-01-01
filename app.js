@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const routes = require('./routes');
 const { requestLogger, errorLogger } = require('./middlewares/loggers');
 const cors = require('./middlewares/cors');
+const limiter = require('./middlewares/limiter');
 
 const { DB_URI } = require('./constants/db');
 const { DEFAULT_PORT } = require('./constants/conn');
@@ -26,6 +27,7 @@ app.use(cors);
 app.use(requestLogger);
 
 app.use(helmet());
+app.use(limiter);
 
 app.use(routes);
 
