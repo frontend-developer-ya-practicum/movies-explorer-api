@@ -8,7 +8,6 @@ const HttpCodes = require('../constants/http-status-codes');
 const ErrorMessages = require('../constants/error-messages');
 const BadRequestError = require('../errors/bad-request');
 const ConflictError = require('../errors/conflict');
-const UnauthorizedError = require('../errors/unauthorized');
 
 module.exports.register = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -45,7 +44,5 @@ module.exports.login = (req, res, next) => {
 
       res.send({ token });
     })
-    .catch((err) => {
-      next(new UnauthorizedError(err.message));
-    });
+    .catch(next);
 };
