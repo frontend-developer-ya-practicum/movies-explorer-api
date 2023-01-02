@@ -12,11 +12,6 @@ const UnauthorizedError = require('../errors/unauthorized');
 module.exports.register = (req, res, next) => {
   const { name, email, password } = req.body;
 
-  if (!password) {
-    next(new BadRequestError('password is required'));
-    return;
-  }
-
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({ name, email, password: hash }))
