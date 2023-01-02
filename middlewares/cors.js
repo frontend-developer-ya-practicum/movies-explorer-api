@@ -1,4 +1,6 @@
 const allowedCors = [
+  'http://mesto-hikjik.students.nomoredomains.club',
+  'https://mesto-hikjik.students.nomoredomains.club',
   'http://localhost:3000',
   'https://localhost:3000',
 ];
