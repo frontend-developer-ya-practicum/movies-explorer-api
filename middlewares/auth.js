@@ -17,6 +17,7 @@ module.exports = (req, res, next) => {
     req.user = jwt.verify(token, secret);
   } catch (err) {
     next(new UnauthorizedError('Authorization required'));
+    return;
   }
 
   next();
