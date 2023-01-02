@@ -6,26 +6,7 @@ const BadRequestError = require('../errors/bad-request');
 const ForbiddenError = require('../errors/forbidden');
 
 module.exports.createMovie = (req, res, next) => {
-  const {
-    country, director, duration, year, description,
-    image, trailerLink, thumbnail, movieId, nameRU, nameEN,
-  } = req.body;
-  const ownerId = req.user._id;
-
-  Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    thumbnail,
-    movieId,
-    nameRU,
-    nameEN,
-    owner: ownerId,
-  })
+  Movie.create({ ...req.body, owner: req.user._id })
     .then((movie) => res.status(HttpCodes.CREATED).send(movie))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
@@ -37,9 +18,7 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.listMovies = (req, res, next) => {
-  const ownerId = req.user._id;
-
-  Movie.find({ owner: ownerId })
+  Movie.find({ owner: req.user._id })
     .then((movies) => res.send(movies))
     .catch(next);
 };
