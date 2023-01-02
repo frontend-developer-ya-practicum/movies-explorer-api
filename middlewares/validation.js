@@ -3,7 +3,7 @@ const { REGEX_LINK } = require('../constants/regex');
 
 module.exports.validateSignUpBody = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
@@ -18,8 +18,8 @@ module.exports.validateSignInBody = celebrate({
 
 module.exports.validatePatchCurrentUserBody = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().email(),
+    name: Joi.string().required().min(2).max(30),
+    email: Joi.string().required().email(),
   }),
 });
 

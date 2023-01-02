@@ -9,13 +9,13 @@ const { requestLogger, errorLogger } = require('./middlewares/loggers');
 const cors = require('./middlewares/cors');
 const limiter = require('./middlewares/limiter');
 
-const { DB_URI } = require('./constants/db');
+const { DEFAULT_DB_URI } = require('./constants/db');
 const { DEFAULT_PORT } = require('./constants/conn');
+
+const { PORT = DEFAULT_PORT, DB_URI = DEFAULT_DB_URI } = process.env;
 
 mongoose.set('strictQuery', false);
 mongoose.connect(DB_URI, { useNewUrlParser: true });
-
-const { PORT = DEFAULT_PORT } = process.env;
 
 const app = express();
 
