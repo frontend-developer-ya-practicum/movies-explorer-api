@@ -3,6 +3,7 @@ const User = require('../models/users');
 const ErrorMessages = require('../constants/error-messages');
 const NotFoundError = require('../errors/not-found');
 const BadRequestError = require('../errors/bad-request');
+const ConflictError = require('../errors/conflict');
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -27,12 +28,12 @@ module.exports.patchCurrentUser = (req, res, next) => {
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequestError(err.message));
-        return;
-      }
-      if (err instanceof mongoose.Error.CastError) {
+      } else if (err instanceof mongoose.Error.CastError) {
         next(new BadRequestError(ErrorMessages.INVALID_USER_ID));
-        return;
+      } else if (err.code === 11000) {
+        next(new ConflictError(ErrorMessages.USER_ALREADY_EXISTS));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };
