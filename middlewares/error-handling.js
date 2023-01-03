@@ -1,4 +1,5 @@
 const HttpCodes = require('../constants/http-status-codes');
+const ErrorMessages = require('../constants/error-messages');
 
 module.exports = (err, req, res, next) => {
   const { statusCode = HttpCodes.INTERNAL_SERVER_ERROR, message } = err;
@@ -6,7 +7,7 @@ module.exports = (err, req, res, next) => {
   res.status(statusCode).send({
     message:
       statusCode === HttpCodes.INTERNAL_SERVER_ERROR
-        ? 'Internal server error'
+        ? ErrorMessages.INTERNAL
         : message,
   });
 

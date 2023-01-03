@@ -7,4 +7,5 @@ module.exports = {
   USER_NOT_FOUND: 'User with specified id not found',
   USER_ALREADY_EXISTS: 'User with given email already exists',
   INVALID_CREDENTIALS: 'The email address or password is incorrect',
+  INTERNAL: 'Internal server error',
 };
