@@ -27,7 +27,7 @@ module.exports.patchCurrentUser = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError(err.message));
+        next(new BadRequestError(ErrorMessages.VALIDATION_ERROR));
       } else if (err instanceof mongoose.Error.CastError) {
         next(new BadRequestError(ErrorMessages.INVALID_USER_ID));
       } else if (err.code === 11000) {

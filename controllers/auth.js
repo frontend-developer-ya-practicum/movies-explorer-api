@@ -22,7 +22,7 @@ module.exports.register = (req, res, next) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError(err.message));
+        next(new BadRequestError(ErrorMessages.VALIDATION_ERROR));
       } else if (err.code === 11000) {
         next(new ConflictError(ErrorMessages.USER_ALREADY_EXISTS));
       } else {

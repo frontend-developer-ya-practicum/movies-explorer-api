@@ -11,7 +11,7 @@ module.exports.createMovie = (req, res, next) => {
     .then((movie) => res.status(HttpCodes.CREATED).send(movie))
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        next(new BadRequestError(err.message));
+        next(new BadRequestError(ErrorMessages.VALIDATION_ERROR));
         return;
       }
       next(err);
